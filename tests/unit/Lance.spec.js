@@ -82,8 +82,9 @@ describe("um lance com valor minimo", () =>{
         // força esperar a próxima atualização do DOM, para ter a mensagem de erro
         await wrapper.vm.$nextTick()
         //Garante que a mensagem de erro foi emitida
-        const msgErro= wrapper.find('p.alert').element
-        expect(msgErro).toBeTruthy()
+        const msgErro= wrapper.find('p.alert').element.textContent
+        const msgEsperada = "O valor mínimo para o lance é de R$ 300"
+        expect(msgErro).toContain(msgEsperada)
         const lancesEmitidos = wrapper.emitted('novo-lance')
         //testa se o lance inválido não foi emitido
         expect(lancesEmitidos).toBeUndefined()
