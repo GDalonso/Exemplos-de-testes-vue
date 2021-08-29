@@ -49,3 +49,38 @@ test('Emite o valor esperado em um lance válido', () =>{
     const lance = parseInt(lancesEmitidos[0][0])
     expect(lance).toBe(11)
 })
+
+describe("um lance com valor minimo", () =>{
+    test('lances devem ter valor maior que o mínimo', () => {
+        //a segunda propriedade seta o mínimo
+        const wrapper = mount(Lance, {
+            propsData:{
+                lanceMinimo:300
+            }
+        })
+        const input = wrapper.find('input')
+        input.setValue(300)
+        wrapper.trigger('submit')
+        const lancesEmitidos = wrapper.emitted('novo-lance')
+        //testa se o lance válido foi emitido
+        expect(lancesEmitidos).toHaveLength(1)
+        // testa se o valor do evento é igual ao do input
+        console.log(lancesEmitidos)
+        const lance = parseInt(lancesEmitidos[0][0])
+        expect(lance).toBe(300)
+    })
+    test('não emite evento se o valor for menor que o mínimo', () => {
+        //a segunda propriedade seta o mínimo
+        const wrapper = mount(Lance, {
+            propsData:{
+                lanceMinimo:300
+            }
+        })
+        const input = wrapper.find('input')
+        input.setValue(299)
+        wrapper.trigger('submit')
+        const lancesEmitidos = wrapper.emitted('novo-lance')
+        //testa se o lance inválido não foi emitido
+        expect(lancesEmitidos).toBeUndefined()
+    })
+})
