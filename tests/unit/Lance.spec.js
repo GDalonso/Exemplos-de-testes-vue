@@ -69,7 +69,7 @@ describe("um lance com valor minimo", () =>{
         const lance = parseInt(lancesEmitidos[0][0])
         expect(lance).toBe(300)
     })
-    test('não emite evento se o valor for menor que o mínimo', () => {
+    test('não emite evento se o valor for menor que o mínimo', async () => {
         //a segunda propriedade seta o mínimo
         const wrapper = mount(Lance, {
             propsData:{
@@ -79,6 +79,11 @@ describe("um lance com valor minimo", () =>{
         const input = wrapper.find('input')
         input.setValue(299)
         wrapper.trigger('submit')
+        // força esperar a próxima atualização do DOM, para ter a mensagem de erro
+        await wrapper.vm.$nextTick()
+        //Garante que a mensagem de erro foi emitida
+        const msgErro= wrapper.find('p.alert').element
+        expect(msgErro).toBeTruthy()
         const lancesEmitidos = wrapper.emitted('novo-lance')
         //testa se o lance inválido não foi emitido
         expect(lancesEmitidos).toBeUndefined()
