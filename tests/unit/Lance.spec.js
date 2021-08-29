@@ -46,5 +46,6 @@ test('Emite o valor esperado em um lance válido', () =>{
     wrapper.trigger('submit')
     const lancesEmitidos = wrapper.emitted('novo-lance')
     // testa se o valor do evento é igual ao do input
-    expect(lancesEmitidos).toHaveValue(11)
+    const lance = parseInt(lancesEmitidos[0][0])
+    expect(lance).toBe(11)
 })
