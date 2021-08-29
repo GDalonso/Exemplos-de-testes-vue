@@ -61,7 +61,7 @@ describe('Um leiloeiro comunica os valores de menor e maior lance', () => {
                 id: 1
             }
         })
-        await flushPromisses()
+        await flushPromises()
         const maiorLance = wrapper.find('.maior-lance')
         expect(maiorLance.element.textContent).toContain('Maior lance: R$ 1099')
     })
